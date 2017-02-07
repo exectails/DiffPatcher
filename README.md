@@ -38,12 +38,12 @@ redownload everything by deleting the version file, getting a clean slate.
 Patcher configuration
 -----------------------------------------------------------------------------
 
-### `patchUri`
+### `patch_uri`
 
 URI to the folder that contains the patch list and the patches listed in
 said list.
 
-### `patchList`
+### `patch_list`
 
 List of patch files for the patcher to download and apply in the following
 format:

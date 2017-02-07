@@ -14,16 +14,16 @@ namespace DiffPatcher
 		{
 			this.Require(confFileName);
 
-			this.PatchUri = this.GetString("patchUri");
-			this.PatchList = this.GetString("patchList");
+			this.PatchUri = this.GetString("patch_uri");
+			this.PatchList = this.GetString("patch_list");
 			this.Exe = this.GetString("exe");
 			this.Arguments = this.GetString("arguments");
 
 			if (string.IsNullOrWhiteSpace(this.PatchUri))
-				throw new ConfigException("Configuration value patchUri must not be empty.");
+				throw new ConfigException("Configuration value patch_uri must not be empty.");
 
 			if (string.IsNullOrWhiteSpace(this.PatchList))
-				throw new ConfigException("Configuration value patchList must not be empty.");
+				throw new ConfigException("Configuration value patch_list must not be empty.");
 
 			if (!this.PatchUri.EndsWith("/"))
 				this.PatchUri += "/";
