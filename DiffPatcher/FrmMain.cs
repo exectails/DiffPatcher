@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,7 +17,6 @@ namespace DiffPatcher
 	public partial class FrmMain : Form
 	{
 		private const string XDeltaFileName = "xdelta3.exe";
-		private const string ConfFileName = "DiffPatcher.conf";
 		private const string VersionFileName = "version";
 		private const string TempDirName = "tmp_patch";
 		private const string ChangesFileName = "changes.txt";
@@ -65,9 +65,12 @@ namespace DiffPatcher
 
 		private void FrmMain_Load(object sender, EventArgs e)
 		{
-			if (!File.Exists(ConfFileName))
+			var assemblyName = Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location);
+			var confFileName = assemblyName + ".conf";
+
+			if (!File.Exists(confFileName))
 			{
-				this.ShowError("File not found: " + ConfFileName);
+				this.ShowError("File not found: " + confFileName);
 				this.Close();
 				return;
 			}
@@ -75,7 +78,7 @@ namespace DiffPatcher
 			try
 			{
 				_conf = new DiffPatcherConf();
-				_conf.Load(ConfFileName);
+				_conf.Load(confFileName);
 			}
 			catch (Exception ex)
 			{
