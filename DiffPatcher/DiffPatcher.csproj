@@ -47,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BinaryPatchUtility.cs" />
     <Compile Include="ConfFile.cs" />
     <Compile Include="DiffPatcherConf.cs" />
     <Compile Include="FileReader.cs" />
