@@ -192,9 +192,12 @@ namespace DiffPatcher
 			if (!this.DoesUriExist(uri))
 				throw new Exception("Failed to download '" + fileName + "', file not found.");
 
+			var downloadSuccessful = false;
+
 			try
 			{
 				var wc = new WebClient();
+
 				wc.DownloadProgressChanged += (sender, args) =>
 				{
 					this.UpdateProgress(args.ProgressPercentage, 100);
@@ -207,6 +210,8 @@ namespace DiffPatcher
 						this.UpdateProgress(1, 1);
 						Monitor.Pulse(args.UserState);
 					}
+
+					downloadSuccessful = (args.Error == null && !args.Cancelled);
 				};
 
 				// To get the progress while using synchronous downloading
@@ -223,6 +228,9 @@ namespace DiffPatcher
 			{
 				throw new Exception("Failed to download '" + fileName + "', error: " + ex.Message);
 			}
+
+			if (!downloadSuccessful)
+				throw new FileNotFoundException("File '" + fileName + "' wasn't downloaded properly.");
 
 			if (Directory.Exists(tmpPath))
 				Directory.Delete(tmpPath, true);
