@@ -380,6 +380,8 @@ namespace DiffPatcher
 
 			this.ToggleButtons(false, false);
 			Process.Start(exe);
+
+			this.Close();
 		}
 	}
 
