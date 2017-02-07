@@ -51,11 +51,20 @@ namespace DiffPatcher
 			this.InvokeIfRequired(() => this.LblStatus.Text = string.Format(format, args));
 		}
 
+		private void ToggleButtons(bool patchEnabled, bool startEnabled)
+		{
+			if (string.IsNullOrWhiteSpace(_conf.Exe))
+				startEnabled = false;
+
+			this.InvokeIfRequired(() =>
+			{
+				this.BtnPatch.Enabled = patchEnabled;
+				this.BtnStart.Enabled = startEnabled;
+			});
+		}
+
 		private void FrmMain_Load(object sender, EventArgs e)
 		{
-			this.BtnPatch.Enabled = false;
-			this.BtnStart.Enabled = false;
-
 			if (!File.Exists(ConfFileName))
 			{
 				this.ShowError("File not found: " + ConfFileName);
@@ -75,6 +84,8 @@ namespace DiffPatcher
 				return;
 			}
 
+			this.ToggleButtons(false, false);
+
 			var patchListUri = _conf.PatchUri + _conf.PatchList;
 			this.CheckPatches(patchListUri);
 		}
@@ -91,14 +102,14 @@ namespace DiffPatcher
 			if (diff > 0)
 			{
 				this.SetStatus("{0} patch(es) found.", diff);
-				this.BtnPatch.Enabled = true;
+				this.ToggleButtons(true, false);
 
 				_patchList = patchList;
 			}
 			else
 			{
 				this.SetStatus("No patches found.");
-				this.BtnStart.Enabled = true;
+				this.ToggleButtons(false, true);
 			}
 		}
 
@@ -287,7 +298,7 @@ namespace DiffPatcher
 
 		private void BtnPatch_Click(object sender, EventArgs e)
 		{
-			this.BtnPatch.Enabled = false;
+			this.ToggleButtons(false, false);
 
 			if (_patchList == null || !_patchList.Any())
 			{
@@ -346,14 +357,22 @@ namespace DiffPatcher
 			this.UpdateProgress(1, 1);
 			this.InvokeIfRequired(() =>
 			{
-				this.BtnPatch.Enabled = false;
-				this.BtnStart.Enabled = true;
+				this.ToggleButtons(false, true);
 			});
 		}
 
 		private void BtnStart_Click(object sender, EventArgs e)
 		{
+			var exe = _conf.Exe;
 
+			if (!File.Exists(exe))
+			{
+				this.ShowError("File not found: " + exe);
+				return;
+			}
+
+			this.ToggleButtons(false, false);
+			Process.Start(exe);
 		}
 	}
 
