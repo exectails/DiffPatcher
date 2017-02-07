@@ -8,6 +8,7 @@ namespace DiffPatcher
 		public string PatchUri { get; private set; }
 		public string PatchList { get; private set; }
 		public string Exe { get; private set; }
+		public string Arguments { get; private set; }
 
 		public void Load(string confFileName)
 		{
@@ -16,6 +17,7 @@ namespace DiffPatcher
 			this.PatchUri = this.GetString("patchUri");
 			this.PatchList = this.GetString("patchList");
 			this.Exe = this.GetString("exe");
+			this.Arguments = this.GetString("arguments");
 
 			if (string.IsNullOrWhiteSpace(this.PatchUri))
 				throw new ConfigException("Configuration value patchUri must not be empty.");

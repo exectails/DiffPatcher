@@ -371,6 +371,7 @@ namespace DiffPatcher
 		private void BtnStart_Click(object sender, EventArgs e)
 		{
 			var exe = _conf.Exe;
+			var arguments = _conf.Arguments;
 
 			if (!File.Exists(exe))
 			{
@@ -379,7 +380,19 @@ namespace DiffPatcher
 			}
 
 			this.ToggleButtons(false, false);
-			Process.Start(exe);
+
+			try
+			{
+				var process = new Process();
+				process.StartInfo.FileName = exe;
+				process.StartInfo.Arguments = arguments;
+				process.Start();
+			}
+			catch (Exception ex)
+			{
+				this.ShowError("Failed to start '" + exe + "', error: " + ex.Message);
+				return;
+			}
 
 			this.Close();
 		}
