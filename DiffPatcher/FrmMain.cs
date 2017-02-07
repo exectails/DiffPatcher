@@ -89,30 +89,41 @@ namespace DiffPatcher
 
 			this.ToggleButtons(false, false);
 
-			var patchListUri = _conf.PatchUri + _conf.PatchList;
-			this.CheckPatches(patchListUri);
+			Task.Run(() =>
+			{
+				var patchListUri = _conf.PatchUri + _conf.PatchList;
+				this.CheckPatches(patchListUri);
+			});
 		}
 
 		private void CheckPatches(string patchListUri)
 		{
 			this.SetStatus("Checking patches...");
 
-			var patchList = this.GetPatchList(patchListUri);
-			var highestVersion = this.GetHighestVersion(patchList);
-			var version = this.GetLocalVersion();
-			var diff = (highestVersion - version);
-
-			if (diff > 0)
+			try
 			{
-				this.SetStatus("{0} patch(es) found.", diff);
-				this.ToggleButtons(true, false);
+				var patchList = this.GetPatchList(patchListUri);
+				var highestVersion = this.GetHighestVersion(patchList);
+				var version = this.GetLocalVersion();
+				var diff = (highestVersion - version);
 
-				_patchList = patchList;
+				if (diff > 0)
+				{
+					this.SetStatus("{0} patch(es) found.", diff);
+					this.ToggleButtons(true, false);
+
+					_patchList = patchList;
+				}
+				else
+				{
+					this.SetStatus("No patches found.");
+					this.ToggleButtons(false, true);
+				}
 			}
-			else
+			catch (Exception ex)
 			{
-				this.SetStatus("No patches found.");
-				this.ToggleButtons(false, true);
+				this.ShowError("Failed to check patches, error: " + ex.Message);
+				this.ToggleButtons(false, false);
 			}
 		}
 
@@ -160,16 +171,57 @@ namespace DiffPatcher
 			File.WriteAllText(VersionFileName, version.ToString());
 		}
 
-		private void DownloadAndExtractPatch(WebClient wc, string uri, string fileName, string tmpPath)
+		private bool DoesUriExist(string uri)
 		{
 			try
 			{
-				wc.DownloadFile(uri, fileName);
-				wc.DownloadProgressChanged += (sender, args) => { this.UpdateProgress(args.ProgressPercentage, 100); };
+				var request = WebRequest.Create(new Uri(uri));
+				request.Method = "HEAD";
+
+				using (var response = request.GetResponse())
+					return true;
+			}
+			catch (WebException)
+			{
+				return false;
+			}
+		}
+
+		private void DownloadAndExtractPatch(string uri, string fileName, string tmpPath)
+		{
+			if (!this.DoesUriExist(uri))
+				throw new Exception("Failed to download '" + fileName + "', file not found.");
+
+			try
+			{
+				var wc = new WebClient();
+				wc.DownloadProgressChanged += (sender, args) =>
+				{
+					this.UpdateProgress(args.ProgressPercentage, 100);
+				};
+
+				wc.DownloadFileCompleted += (sender, args) =>
+				{
+					lock (args.UserState)
+					{
+						this.UpdateProgress(1, 1);
+						Monitor.Pulse(args.UserState);
+					}
+				};
+
+				// To get the progress while using synchronous downloading
+				// the thread is locked using lock and Monitor, to be
+				// unlocked from DownloadFileCompleted.
+				var syncLock = new Object();
+				lock (syncLock)
+				{
+					wc.DownloadFileAsync(new Uri(uri), fileName, syncLock);
+					Monitor.Wait(syncLock);
+				}
 			}
 			catch (WebException ex)
 			{
-				throw new Exception("Failed to download '" + uri + "', error: " + ex.Message);
+				throw new Exception("Failed to download '" + fileName + "', error: " + ex.Message);
 			}
 
 			if (Directory.Exists(tmpPath))
@@ -325,7 +377,6 @@ namespace DiffPatcher
 			{
 				var version = this.GetLocalVersion();
 				var list = _patchList.OrderBy(a => a.Version).SkipWhile(a => a.Version <= version);
-				var wc = new WebClient();
 
 				foreach (var patchFile in list)
 				{
@@ -333,7 +384,7 @@ namespace DiffPatcher
 					var patchFileUri = Path.Combine(_conf.PatchUri, patchFileName);
 
 					this.SetStatus("Downloading {0}...", patchFileName);
-					this.DownloadAndExtractPatch(wc, patchFileUri, patchFileName, TempDirName);
+					this.DownloadAndExtractPatch(patchFileUri, patchFileName, TempDirName);
 
 					this.SetStatus("Checking {0}...", patchFileName);
 					this.AssertPatchApplicable(TempDirName);
