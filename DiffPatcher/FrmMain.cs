@@ -189,13 +189,9 @@ namespace DiffPatcher
 
 		private void DownloadAndExtractPatch(string uri, string fileName, string tmpPath)
 		{
-			if (!this.DoesUriExist(uri))
-				throw new WebException("Failed to download '" + fileName + "', file not found.");
-
-			var downloadSuccessful = false;
-
 			try
 			{
+				Exception downloadException = null;
 				var wc = new WebClient();
 
 				wc.DownloadProgressChanged += (sender, args) =>
@@ -211,7 +207,7 @@ namespace DiffPatcher
 						Monitor.Pulse(args.UserState);
 					}
 
-					downloadSuccessful = (args.Error == null && !args.Cancelled);
+					downloadException = args.Error;
 				};
 
 				// To get the progress while using synchronous downloading
@@ -223,14 +219,14 @@ namespace DiffPatcher
 					wc.DownloadFileAsync(new Uri(uri), fileName, syncLock);
 					Monitor.Wait(syncLock);
 				}
+
+				if (downloadException != null)
+					throw downloadException;
 			}
 			catch (WebException ex)
 			{
 				throw new WebException("Failed to download '" + fileName + "', error: " + ex.Message);
 			}
-
-			if (!downloadSuccessful)
-				throw new FileNotFoundException("File '" + fileName + "' wasn't downloaded properly.");
 
 			if (Directory.Exists(tmpPath))
 				Directory.Delete(tmpPath, true);
