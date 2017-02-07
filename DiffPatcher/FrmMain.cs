@@ -259,7 +259,7 @@ namespace DiffPatcher
 
 				var process = new Process();
 				process.StartInfo.FileName = XDeltaFileName;
-				process.StartInfo.Arguments = string.Format("-v -d -s {0} {1} {2}", oldFilePath, patchFilePath, outFilePath);
+				process.StartInfo.Arguments = string.Format("-v -d -f -s {0} {1} {2}", oldFilePath, patchFilePath, outFilePath);
 				process.StartInfo.UseShellExecute = false;
 				process.StartInfo.CreateNoWindow = true;
 				process.StartInfo.RedirectStandardOutput = true;
