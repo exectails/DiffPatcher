@@ -53,13 +53,12 @@
 			// 
 			// TxtOldPath
 			// 
-			this.TxtOldPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.TxtOldPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.TxtOldPath.Location = new System.Drawing.Point(15, 25);
 			this.TxtOldPath.Name = "TxtOldPath";
 			this.TxtOldPath.Size = new System.Drawing.Size(211, 20);
 			this.TxtOldPath.TabIndex = 1;
-			this.TxtOldPath.Text = "C:\\Users\\exec\\Desktop\\v1";
 			// 
 			// BtnBrowseOld
 			// 
@@ -85,13 +84,12 @@
 			// 
 			// TxtNewPath
 			// 
-			this.TxtNewPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.TxtNewPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.TxtNewPath.Location = new System.Drawing.Point(15, 69);
 			this.TxtNewPath.Name = "TxtNewPath";
 			this.TxtNewPath.Size = new System.Drawing.Size(211, 20);
 			this.TxtNewPath.TabIndex = 4;
-			this.TxtNewPath.Text = "C:\\Users\\exec\\Desktop\\v2";
 			// 
 			// label2
 			// 
@@ -104,8 +102,8 @@
 			// 
 			// BtnCreate
 			// 
-			this.BtnCreate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.BtnCreate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.BtnCreate.Location = new System.Drawing.Point(15, 151);
 			this.BtnCreate.Name = "BtnCreate";
 			this.BtnCreate.Size = new System.Drawing.Size(242, 35);
@@ -127,13 +125,12 @@
 			// 
 			// TxtPatchFileName
 			// 
-			this.TxtPatchFileName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.TxtPatchFileName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.TxtPatchFileName.Location = new System.Drawing.Point(15, 113);
 			this.TxtPatchFileName.Name = "TxtPatchFileName";
 			this.TxtPatchFileName.Size = new System.Drawing.Size(211, 20);
 			this.TxtPatchFileName.TabIndex = 8;
-			this.TxtPatchFileName.Text = "patch.zip";
 			// 
 			// label3
 			// 
