@@ -130,6 +130,10 @@ namespace DiffPatchCreator
 
 		private void CreateArchive(string patchFileName)
 		{
+			var patchDirPath = Path.GetDirectoryName(patchFileName);
+			if (!Directory.Exists(patchFileName))
+				Directory.CreateDirectory(patchDirPath);
+
 			using (var zip = new ZipFile())
 			{
 				zip.AddDirectory(TempDirName, "");
