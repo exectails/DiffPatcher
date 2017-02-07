@@ -190,7 +190,7 @@ namespace DiffPatcher
 		private void DownloadAndExtractPatch(string uri, string fileName, string tmpPath)
 		{
 			if (!this.DoesUriExist(uri))
-				throw new Exception("Failed to download '" + fileName + "', file not found.");
+				throw new WebException("Failed to download '" + fileName + "', file not found.");
 
 			var downloadSuccessful = false;
 
@@ -226,7 +226,7 @@ namespace DiffPatcher
 			}
 			catch (WebException ex)
 			{
-				throw new Exception("Failed to download '" + fileName + "', error: " + ex.Message);
+				throw new WebException("Failed to download '" + fileName + "', error: " + ex.Message);
 			}
 
 			if (!downloadSuccessful)
@@ -405,6 +405,12 @@ namespace DiffPatcher
 				}
 			}
 			catch (FileNotFoundException ex)
+			{
+				this.RemoveTempFolder(TempDirName);
+				this.ShowError(ex.Message);
+				return;
+			}
+			catch (WebException ex)
 			{
 				this.RemoveTempFolder(TempDirName);
 				this.ShowError(ex.Message);
