@@ -159,8 +159,15 @@ namespace DiffPatcher
 
 		private void DownloadAndExtractPatch(WebClient wc, string uri, string fileName, string tmpPath)
 		{
-			wc.DownloadFile(uri, fileName);
-			wc.DownloadProgressChanged += (sender, args) => { this.UpdateProgress(args.ProgressPercentage, 100); };
+			try
+			{
+				wc.DownloadFile(uri, fileName);
+				wc.DownloadProgressChanged += (sender, args) => { this.UpdateProgress(args.ProgressPercentage, 100); };
+			}
+			catch (WebException ex)
+			{
+				throw new Exception("Failed to download '" + uri + "', error: " + ex.Message);
+			}
 
 			if (Directory.Exists(tmpPath))
 				Directory.Delete(tmpPath, true);
