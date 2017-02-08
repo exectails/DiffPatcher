@@ -98,7 +98,7 @@ namespace DiffPatcher
 
 		private void CheckPatches(string patchListUri)
 		{
-			this.SetStatus("Checking patches...");
+			this.SetStatus("Checking for updates...");
 
 			try
 			{
@@ -109,20 +109,20 @@ namespace DiffPatcher
 
 				if (diff > 0)
 				{
-					this.SetStatus("{0} patch(es) found.", diff);
+					this.SetStatus("{0} update(s) found.", diff);
 					this.ToggleButtons(true, false);
 
 					_patchList = patchList;
 				}
 				else
 				{
-					this.SetStatus("No patches found.");
+					this.SetStatus("No updates found.");
 					this.ToggleButtons(false, true);
 				}
 			}
 			catch (Exception ex)
 			{
-				this.ShowError("Failed to check patches, error: " + ex.Message);
+				this.ShowError("Failed to check for updates, error: " + ex.Message);
 				this.ToggleButtons(false, false);
 			}
 		}
