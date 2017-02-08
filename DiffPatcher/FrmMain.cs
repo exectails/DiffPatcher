@@ -233,7 +233,7 @@ namespace DiffPatcher
 
 			using (var zip = new ZipFile(fileName))
 			{
-				zip.ExtractAll(TempDirName);
+				zip.ExtractAll(tmpPath);
 			}
 
 			File.Delete(fileName);
