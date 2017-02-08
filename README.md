@@ -8,7 +8,8 @@ How it works
 
 The `DiffPatchCreator` allows the comparision of two folders, creating a
 single patch file (zip archive) to patch the old version to be equal to
-the new version.
+the new version, using delta compression, to only patch what is necessary,
+and not replace entire files.
 
 `DiffPatcher` in turn downloads these patch files and applies them
 to the files in the folder it is in.
