@@ -36,8 +36,8 @@
 			// 
 			// BtnPatch
 			// 
-			this.BtnPatch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.BtnPatch.Location = new System.Drawing.Point(206, 12);
+			this.BtnPatch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.BtnPatch.Location = new System.Drawing.Point(246, 12);
 			this.BtnPatch.Name = "BtnPatch";
 			this.BtnPatch.Size = new System.Drawing.Size(75, 23);
 			this.BtnPatch.TabIndex = 0;
@@ -51,13 +51,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.ProgressBar.Location = new System.Drawing.Point(12, 46);
 			this.ProgressBar.Name = "ProgressBar";
-			this.ProgressBar.Size = new System.Drawing.Size(350, 12);
+			this.ProgressBar.Size = new System.Drawing.Size(390, 12);
 			this.ProgressBar.TabIndex = 1;
 			// 
 			// BtnStart
 			// 
-			this.BtnStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.BtnStart.Location = new System.Drawing.Point(287, 12);
+			this.BtnStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.BtnStart.Location = new System.Drawing.Point(327, 12);
 			this.BtnStart.Name = "BtnStart";
 			this.BtnStart.Size = new System.Drawing.Size(75, 23);
 			this.BtnStart.TabIndex = 2;
@@ -67,6 +67,7 @@
 			// 
 			// LblStatus
 			// 
+			this.LblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.LblStatus.AutoSize = true;
 			this.LblStatus.Location = new System.Drawing.Point(12, 17);
 			this.LblStatus.Name = "LblStatus";
@@ -78,7 +79,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(374, 70);
+			this.ClientSize = new System.Drawing.Size(414, 70);
 			this.Controls.Add(this.LblStatus);
 			this.Controls.Add(this.BtnStart);
 			this.Controls.Add(this.ProgressBar);
