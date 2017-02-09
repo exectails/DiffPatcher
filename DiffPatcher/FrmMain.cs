@@ -31,6 +31,10 @@ namespace DiffPatcher
 			InitializeComponent();
 		}
 
+		/// <summary>
+		/// Runs action either directly or via Invoke if necessary.
+		/// </summary>
+		/// <param name="action"></param>
 		private void InvokeIfRequired(Action action)
 		{
 			if (this.InvokeRequired)
@@ -39,6 +43,10 @@ namespace DiffPatcher
 				action();
 		}
 
+		/// <summary>
+		/// Shows error in message box and resets form.
+		/// </summary>
+		/// <param name="message"></param>
 		private void ShowError(string message)
 		{
 			MessageBox.Show(message, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -46,11 +54,21 @@ namespace DiffPatcher
 			this.UpdateProgress(0, 0);
 		}
 
+		/// <summary>
+		/// Sets status text.
+		/// </summary>
+		/// <param name="format"></param>
+		/// <param name="args"></param>
 		private void SetStatus(string format, params object[] args)
 		{
 			this.InvokeIfRequired(() => this.LblStatus.Text = string.Format(format, args));
 		}
 
+		/// <summary>
+		/// Sets the buttons according to the parameters.
+		/// </summary>
+		/// <param name="patchEnabled"></param>
+		/// <param name="startEnabled"></param>
 		private void ToggleButtons(bool patchEnabled, bool startEnabled)
 		{
 			if (string.IsNullOrWhiteSpace(_conf.Exe))
@@ -63,6 +81,11 @@ namespace DiffPatcher
 			});
 		}
 
+		/// <summary>
+		/// Called when form is loaded.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void FrmMain_Load(object sender, EventArgs e)
 		{
 			var assemblyName = Path.GetFileNameWithoutExtension(Assembly.GetEntryAssembly().Location);
@@ -96,6 +119,10 @@ namespace DiffPatcher
 			});
 		}
 
+		/// <summary>
+		/// Checks for new patches.
+		/// </summary>
+		/// <param name="patchListUri"></param>
 		private void CheckPatches(string patchListUri)
 		{
 			this.SetStatus("Checking for updates...");
@@ -127,6 +154,11 @@ namespace DiffPatcher
 			}
 		}
 
+		/// <summary>
+		/// Downloads and returns patch list.
+		/// </summary>
+		/// <param name="uri"></param>
+		/// <returns></returns>
 		private PatchList GetPatchList(string uri)
 		{
 			var patchListFileName = Path.GetFileName(uri);
@@ -153,11 +185,20 @@ namespace DiffPatcher
 			return patchList;
 		}
 
+		/// <summary>
+		/// Returns the patch with the highest version in list.
+		/// </summary>
+		/// <param name="patchList"></param>
+		/// <returns></returns>
 		private int GetHighestVersion(PatchList patchList)
 		{
 			return patchList.Max(a => a.Version);
 		}
 
+		/// <summary>
+		/// Returns the local patch version.
+		/// </summary>
+		/// <returns></returns>
 		private int GetLocalVersion()
 		{
 			if (!File.Exists(VersionFileName))
@@ -166,11 +207,20 @@ namespace DiffPatcher
 			return Convert.ToInt32(File.ReadAllText(VersionFileName));
 		}
 
+		/// <summary>
+		/// Changes local patch version.
+		/// </summary>
+		/// <param name="version"></param>
 		private void UpdateLocalVersion(int version)
 		{
 			File.WriteAllText(VersionFileName, version.ToString());
 		}
 
+		/// <summary>
+		/// Returns true if URI exists.
+		/// </summary>
+		/// <param name="uri"></param>
+		/// <returns></returns>
 		private bool DoesUriExist(string uri)
 		{
 			try
@@ -187,6 +237,12 @@ namespace DiffPatcher
 			}
 		}
 
+		/// <summary>
+		/// Downloads patch from given URI and extracts it to temp path.
+		/// </summary>
+		/// <param name="uri"></param>
+		/// <param name="fileName"></param>
+		/// <param name="tmpPath"></param>
 		private void DownloadAndExtractPatch(string uri, string fileName, string tmpPath)
 		{
 			try
@@ -239,6 +295,13 @@ namespace DiffPatcher
 			File.Delete(fileName);
 		}
 
+		/// <summary>
+		/// Parses patch list from temp path and populates out lists.
+		/// </summary>
+		/// <param name="tempPath"></param>
+		/// <param name="added"></param>
+		/// <param name="removed"></param>
+		/// <param name="changed"></param>
 		private void GetFileLists(string tempPath, out List<string> added, out List<string> removed, out List<string> changed)
 		{
 			var changesPath = Path.Combine(tempPath, ChangesFileName);
@@ -267,6 +330,11 @@ namespace DiffPatcher
 			}
 		}
 
+		/// <summary>
+		/// Updates progress bar.
+		/// </summary>
+		/// <param name="value"></param>
+		/// <param name="max"></param>
 		private void UpdateProgress(int value, int max)
 		{
 			this.InvokeIfRequired(() =>
@@ -276,6 +344,10 @@ namespace DiffPatcher
 			});
 		}
 
+		/// <summary>
+		/// Applies patch from given folder.
+		/// </summary>
+		/// <param name="patchDirPath"></param>
 		private void ApplyPatch(string patchDirPath)
 		{
 			var filesPath = Path.Combine(TempDirName, FilesDirName);
@@ -341,6 +413,10 @@ namespace DiffPatcher
 			}
 		}
 
+		/// <summary>
+		/// Throws if patch can't be applied.
+		/// </summary>
+		/// <param name="patchDirPath"></param>
 		private void AssertPatchApplicable(string patchDirPath)
 		{
 			if (!File.Exists(XDeltaFileName))
@@ -356,12 +432,21 @@ namespace DiffPatcher
 			}
 		}
 
+		/// <summary>
+		/// Removes given folder if it exists.
+		/// </summary>
+		/// <param name="tempPath"></param>
 		private void RemoveTempFolder(string tempPath)
 		{
 			if (Directory.Exists(tempPath))
 				Directory.Delete(tempPath, true);
 		}
 
+		/// <summary>
+		/// Called when Patch is clicked.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void BtnPatch_Click(object sender, EventArgs e)
 		{
 			this.ToggleButtons(false, false);
@@ -375,6 +460,9 @@ namespace DiffPatcher
 			Task.Run(() => DownloadAndApplyUpdates());
 		}
 
+		/// <summary>
+		/// Downloads all updates and applies them.
+		/// </summary>
 		private void DownloadAndApplyUpdates()
 		{
 			try
@@ -422,6 +510,9 @@ namespace DiffPatcher
 			this.UpdateComplete();
 		}
 
+		/// <summary>
+		/// Called after all updates where applied.
+		/// </summary>
 		private void UpdateComplete()
 		{
 			this.SetStatus("Update complete.");
@@ -432,6 +523,11 @@ namespace DiffPatcher
 			});
 		}
 
+		/// <summary>
+		/// Called when Start is clicked.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void BtnStart_Click(object sender, EventArgs e)
 		{
 			var exe = _conf.Exe;
@@ -462,23 +558,45 @@ namespace DiffPatcher
 		}
 	}
 
+	/// <summary>
+	/// Represents a patch file.
+	/// </summary>
 	public class PatchFile
 	{
+		/// <summary>
+		/// The version this file patches to.
+		/// </summary>
 		public int Version { get; private set; }
+
+		/// <summary>
+		/// Patch's file name.
+		/// </summary>
 		public string FileName { get; private set; }
 
+		/// <summary>
+		/// Creates new instance.
+		/// </summary>
+		/// <param name="version"></param>
+		/// <param name="fileName"></param>
 		public PatchFile(int version, string fileName)
 		{
 			this.Version = version;
 			this.FileName = fileName;
 		}
 
+		/// <summary>
+		/// Returns string representation of PatchFile.
+		/// </summary>
+		/// <returns></returns>
 		public override string ToString()
 		{
 			return string.Format("[{0}, {1}]", this.Version, this.FileName);
 		}
 	}
 
+	/// <summary>
+	/// List of PatchFiles.
+	/// </summary>
 	public class PatchList : List<PatchFile>
 	{
 	}
