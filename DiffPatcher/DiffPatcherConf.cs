@@ -52,8 +52,15 @@ namespace DiffPatcher
 		}
 	}
 
+	/// <summary>
+	/// Thrown when there's a problem with a configuration file.
+	/// </summary>
 	public class ConfigException : Exception
 	{
+		/// <summary>
+		/// Creates new instances.
+		/// </summary>
+		/// <param name="message"></param>
 		public ConfigException(string message)
 			: base(message)
 		{

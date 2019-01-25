@@ -18,9 +18,12 @@ namespace DiffPatchCreator
 		private readonly string TempFilesPath = Path.Combine(TempDirName, "files");
 		private readonly string ChangesPath = Path.Combine(TempDirName, "changes.txt");
 
+		/// <summary>
+		/// Creates new instance.
+		/// </summary>
 		public FrmMain()
 		{
-			InitializeComponent();
+			this.InitializeComponent();
 		}
 
 		/// <summary>

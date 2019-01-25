@@ -47,14 +47,14 @@
 			this.label1.AutoSize = true;
 			this.label1.Location = new System.Drawing.Point(12, 9);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(60, 13);
+			this.label1.Size = new System.Drawing.Size(95, 13);
 			this.label1.TabIndex = 0;
-			this.label1.Text = "Old version";
+			this.label1.Text = "Path to old version";
 			// 
 			// TxtOldPath
 			// 
-			this.TxtOldPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.TxtOldPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.TxtOldPath.Location = new System.Drawing.Point(15, 25);
 			this.TxtOldPath.Name = "TxtOldPath";
 			this.TxtOldPath.Size = new System.Drawing.Size(211, 20);
@@ -84,8 +84,8 @@
 			// 
 			// TxtNewPath
 			// 
-			this.TxtNewPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.TxtNewPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.TxtNewPath.Location = new System.Drawing.Point(15, 69);
 			this.TxtNewPath.Name = "TxtNewPath";
 			this.TxtNewPath.Size = new System.Drawing.Size(211, 20);
@@ -96,14 +96,14 @@
 			this.label2.AutoSize = true;
 			this.label2.Location = new System.Drawing.Point(12, 53);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(66, 13);
+			this.label2.Size = new System.Drawing.Size(101, 13);
 			this.label2.TabIndex = 3;
-			this.label2.Text = "New version";
+			this.label2.Text = "Path to new version";
 			// 
 			// BtnCreate
 			// 
-			this.BtnCreate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.BtnCreate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.BtnCreate.Location = new System.Drawing.Point(15, 151);
 			this.BtnCreate.Name = "BtnCreate";
 			this.BtnCreate.Size = new System.Drawing.Size(242, 35);
@@ -125,8 +125,8 @@
 			// 
 			// TxtPatchFileName
 			// 
-			this.TxtPatchFileName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.TxtPatchFileName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.TxtPatchFileName.Location = new System.Drawing.Point(15, 113);
 			this.TxtPatchFileName.Name = "TxtPatchFileName";
 			this.TxtPatchFileName.Size = new System.Drawing.Size(211, 20);
@@ -137,9 +137,9 @@
 			this.label3.AutoSize = true;
 			this.label3.Location = new System.Drawing.Point(12, 97);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(85, 13);
+			this.label3.Size = new System.Drawing.Size(93, 13);
 			this.label3.TabIndex = 7;
-			this.label3.Text = "Patch File Name";
+			this.label3.Text = "Name of patch file";
 			// 
 			// SaveFile
 			// 

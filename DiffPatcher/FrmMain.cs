@@ -26,9 +26,12 @@ namespace DiffPatcher
 		private DiffPatcherConf _conf;
 		private PatchList _patchList;
 
+		/// <summary>
+		/// Creates new instance.
+		/// </summary>
 		public FrmMain()
 		{
-			InitializeComponent();
+			this.InitializeComponent();
 		}
 
 		/// <summary>
@@ -61,7 +64,8 @@ namespace DiffPatcher
 		/// <param name="args"></param>
 		private void SetStatus(string format, params object[] args)
 		{
-			this.InvokeIfRequired(() => this.LblStatus.Text = string.Format(format, args));
+			var text = (args.Length == 0 ? format : string.Format(format, args));
+			this.InvokeIfRequired(() => this.LblStatus.Text = text);
 		}
 
 		/// <summary>
